@@ -91,7 +91,7 @@ def main():
         type=Path,
         default=application_directory / "generation_model.pt",
     )
-    argument_parser.add_argument("--epochs", type=int, default=20)
+    argument_parser.add_argument("--epochs", type=int, default=100)
     argument_parser.add_argument("--sequence-length", type=int, default=64)
     argument_parser.add_argument("--batch-size", type=int, default=32)
     argument_parser.add_argument("--embedding-dimension", type=int, default=64)

@@ -6,13 +6,12 @@ RNN layers. Install PyTorch with `python -m pip install torch` if needed.
 
 ## Text generation
 
-This application builds an original story corpus from the seed story and varied
-generated chapters in `text_generation/corpus.txt`. The default build creates
-240 chapters, about 28,000 word and punctuation tokens.
+This application trains on an original 20-chapter story in
+`text_generation/corpus.txt`, about the river community of Bellweather. It has
+about 8,100 word and punctuation tokens.
 
 ```bash
-python text_generation/build_corpus.py --chapter-count 240
-python text_generation/train.py --epochs 20
+python text_generation/train.py --epochs 100
 python text_generation/generate.py --seed-text "mira lived in" --new-token-count 40
 ```
 
@@ -20,14 +19,12 @@ The trained model is saved in `text_generation/generation_model.pt`.
 
 ## English to Spanish translation
 
-This application builds its separate English-Spanish parallel corpus in
-`translation/parallel_corpus.tsv`. It combines the seed pairs with thousands of
-generated sentence pairs covering pronouns, verbs, objects, and time phrases;
-the default build produces 5,833 pairs.
+This application trains on its separate, hand-written English-Spanish parallel
+corpus in `translation/parallel_corpus.tsv`. Its 177 sentence pairs follow a
+coherent story about the same river community, with additional everyday phrases.
 Each line contains an English sentence, a tab, and its Spanish translation.
 
 ```bash
-python translation/build_corpus.py
 python translation/train.py --epochs 100
 python translation/translate.py "good morning"
 ```
