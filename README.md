@@ -1,14 +1,38 @@
-# tran
+# Word-level RNN applications
 
-Train a word-level recurrent neural network on a UTF-8 text file:
+Both applications use PyTorch and define their recurrent updates directly with
+embedding lookups, weight matrices, and `tanh`. Neither uses PyTorch's built-in
+RNN layers. Install PyTorch with `python -m pip install torch` if needed.
+
+## Text generation
+
+This application builds an original story corpus from the seed story and varied
+generated chapters in `text_generation/corpus.txt`. The default build creates
+240 chapters, about 28,000 word and punctuation tokens.
 
 ```bash
-python train_rnn.py sample_corpus.txt --epochs 10 --output-path sample_rnn_model.pt
+python text_generation/build_corpus.py --chapter-count 240
+python text_generation/train.py --epochs 20
+python text_generation/generate.py --seed-text "mira lived in" --new-token-count 40
 ```
 
-The model tokenizes words and punctuation, looks up a learned embedding for
-each token, and predicts the next token from its tanh recurrent hidden state.
-The recurrence is defined directly in `ManualRecurrentLanguageModel`; it does
-not use PyTorch's built-in RNN layer. Training uses backpropagation through time
-and saves the vocabulary and learned parameters in a PyTorch `.pt` file. Install
-PyTorch with `python -m pip install torch` if it is not already available.
+The trained model is saved in `text_generation/generation_model.pt`.
+
+## English to Spanish translation
+
+This application builds its separate English-Spanish parallel corpus in
+`translation/parallel_corpus.tsv`. It combines the seed pairs with thousands of
+generated sentence pairs covering pronouns, verbs, objects, and time phrases;
+the default build produces 5,833 pairs.
+Each line contains an English sentence, a tab, and its Spanish translation.
+
+```bash
+python translation/build_corpus.py
+python translation/train.py --epochs 100
+python translation/translate.py "good morning"
+```
+
+The trained model is saved in `translation/translation_model.pt`.
+
+The original single-corpus training example remains available as
+`python train_rnn.py sample_corpus.txt`.
