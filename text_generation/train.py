@@ -13,6 +13,7 @@ def tokenize_corpus(corpus_text):
 
 
 def create_training_sequences(token_indices, sequence_length):
+    # use input_token_sequences[0,:12] and target_token_sequences[0,:12] see how it works
     sequence_count = (len(token_indices) - 1) // sequence_length
     if sequence_count < 1:
         raise ValueError("the corpus must contain more tokens than the sequence length")
